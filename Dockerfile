@@ -2,10 +2,18 @@
 FROM stackbrew/ubuntu:12.04
 MAINTAINER Valley "valley@hackberry.biz"
 
+# Set locale
+RUN export LANGUAGE=en_US.UTF-8
+RUN export LANG=en_US.UTF-8
+RUN export LC_ALL=en_US.UTF-8
 RUN locale-gen en_US.UTF-8
-RUN apt-get -qq update && apt-get -y install curl
+RUN update-locale LANG=en_US.UTF-8
+RUN dpkg-reconfigure locales
+
+RUN export DEBIAN_FRONTEND=noninteractive
+RUN apt-get -qq -y update && apt-get -y -q install curl
 RUN curl -s https://alioth.debian.org/scm/loggerhead/pkg-postgresql/postgresql-common/trunk/download/head:/apt.postgresql.org.s-20130224224205-px3qyst90b3xp8zj-1/apt.postgresql.org.sh | bash
-RUN apt-get -qq update && LC_ALL=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive apt-get install -y -q postgresql-9.3 postgresql-contrib-9.3 postgresql-9.3-plv8 postgresql-9.3-postgis libpq-dev sudo
+RUN apt-get -qq -y update && apt-get install -y -q postgresql-9.3 postgresql-contrib-9.3 postgresql-9.3-plv8 postgresql-9.3-postgis libpq-dev sudo
 
 # /etc/ssl/private can't be accessed from within container for some reason
 # (@andrewgodwin says it's something AUFS related)
