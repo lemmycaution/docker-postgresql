@@ -1,6 +1,6 @@
 # Forked from 
-FROM stackbrew/ubuntu:12.04
-MAINTAINER Valley "valley@hackberry.biz"
+FROM ubuntu:14.04
+MAINTAINER Onur Uyar "me@onuruyar.com"
 
 # Set locale
 RUN export LANGUAGE=en_US.UTF-8
@@ -13,7 +13,7 @@ RUN dpkg-reconfigure locales
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq -y update && apt-get -y -q install curl
 RUN curl -s https://alioth.debian.org/scm/loggerhead/pkg-postgresql/postgresql-common/trunk/download/head:/apt.postgresql.org.s-20130224224205-px3qyst90b3xp8zj-1/apt.postgresql.org.sh | bash
-RUN apt-get -qq -y update && apt-get install -y -q postgresql-9.3 postgresql-contrib-9.3 postgresql-9.3-plv8 postgresql-9.3-postgis libpq-dev sudo
+RUN apt-get -qq -y update && apt-get install -y -q postgresql-9.3 postgresql-contrib-9.3 postgresql-9.3-plv8 postgresql-9.3-postgis-2.1 libpq-dev sudo
 
 # /etc/ssl/private can't be accessed from within container for some reason
 # (@andrewgodwin says it's something AUFS related)
